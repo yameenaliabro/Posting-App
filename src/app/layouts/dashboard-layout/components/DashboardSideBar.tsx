@@ -1,3 +1,4 @@
+import { HomeOutlined, MailOutlined, NodeCollapseOutlined, UpOutlined, UserOutlined } from '@ant-design/icons'
 import { Layout, Menu, MenuProps, } from 'antd'
 import Link from 'next/link'
 import React, { useMemo } from 'react'
@@ -8,8 +9,16 @@ function DashboardSideBar() {
 
     const menuItems: MenuProps["items"] = useMemo(() => ([
         {
-            label: <Link href="/dashboard">Dashboard</Link>,
+            label: <Link href="/">Home</Link>, icon: <HomeOutlined />,
             key: "dashboard"
+        },
+        {
+            label: <Link href="/all-posts">All Posts</Link>, icon: <UpOutlined />,
+            key: "allposts"
+        },
+        {
+            label: <Link href="/account">Account</Link>, icon: <UserOutlined />,
+            key: "posts"
         },
     ]), [])
 

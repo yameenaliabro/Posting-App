@@ -23,5 +23,6 @@ export type PostContext = {
     Post: getpostprop[],
     loading: boolean
     deletePost: (userid: string) => void
-    // editpost: (props: getpostprop) => void
+    updatePost: (postid: string, props: getpostprop) => void,
+    getAllPost: () => void
 }

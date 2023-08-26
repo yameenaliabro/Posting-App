@@ -1,9 +1,8 @@
 "use client";
-import { Loader } from '@src/app/compoenets/Common';
 import { UseAuth } from '@src/app/hooks'
-import { auth, db } from '@src/app/service/firebase'
+import { db } from '@src/app/service/firebase'
 import { PostContext, createpostprop, getpostprop, } from '@src/app/types'
-import { addDoc, collection, deleteDoc, doc, getDocs, query, serverTimestamp, where } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDocs, query, serverTimestamp, updateDoc, where } from 'firebase/firestore'
 import React, { ReactNode, createContext, useCallback, useEffect, useMemo, useState } from 'react'
 
 
@@ -34,6 +33,19 @@ const PostProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [user]);
 
+    const getAllPost = useCallback(async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "blogs"))
+            const posts: getpostprop[] = []
+            querySnapshot.forEach((doc) => {
+                posts.push({ ...doc.data(), id: doc.id } as getpostprop)
+            })
+            setPosts(posts)
+        } catch (error) {
+            console.log("🚀 ~ file: index.tsx:41 ~ getAllPost ~ error:", error)
+
+        }
+    }, [])
 
     const getPost = useCallback(async () => {
         try {
@@ -60,6 +72,19 @@ const PostProvider = ({ children }: { children: ReactNode }) => {
             console.log("🚀 ~ file: index.tsx:58 ~ deletePost ~ error:", error)
         }
     }, [Post])
+
+    const updatePost = useCallback(async (postid: string, updaPost: getpostprop) => {
+        setLoading(true)
+        try {
+            await updateDoc(doc(db, "blogs", postid), updaPost)
+            setPosts(prev =>
+                prev.map((post) => (post.id === postid ? { ...post, ...updaPost } : post))
+            )
+            setLoading(false)
+        } catch (error) {
+            console.log("🚀 ~ file: index.tsx:68 ~ updaPost ~ error:", error)
+        }
+    }, [])
     useEffect(() => {
         getPost()
         return () => { }
@@ -71,13 +96,17 @@ const PostProvider = ({ children }: { children: ReactNode }) => {
         getPost,
         Post,
         loading,
-        deletePost
+        deletePost,
+        updatePost,
+        getAllPost
     }), [
         createPost,
         getPost,
         Post,
         loading,
-        deletePost
+        deletePost,
+        updatePost,
+        getAllPost,
     ])
     return (
         <PostContext.Provider value={value}>

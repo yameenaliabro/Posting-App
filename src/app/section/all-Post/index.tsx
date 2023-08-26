@@ -1,19 +1,17 @@
 "use client";
-import { UsePost } from "@src/app/hooks";
 import { getpostprop } from "@src/app/types";
 import { Avatar, Button, Card, Divider, List, Popconfirm, Typography, message } from "antd"
 import { useCallback, useEffect, useState } from "react"
-import { UpdateModal } from "..";
 import { Timestamp } from "firebase/firestore";
+import { UpdateModal } from "../homesection";
+import { UsePost } from "@src/app/hooks";
 
-const ShowPost = () => {
-    const [postCount, setPostCount] = useState(0);
+const AllPost = () => {
     const [editmodalvisible, seteditmodalvisible] = useState(false)
     const [editPost, seteditPost] = useState<getpostprop | null>(null)
-    const { Post, deletePost, updatePost } = UsePost()
+    const { deletePost, updatePost, Post } = UsePost()
 
     useEffect(() => {
-        setPostCount(Post.length);
         return () => { }
     }, [Post])
 
@@ -87,4 +85,4 @@ const ShowPost = () => {
         </div>
     )
 }
-export default ShowPost
+export default AllPost

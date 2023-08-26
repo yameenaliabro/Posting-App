@@ -37,8 +37,8 @@ const CreateBlog = () => {
                     <Form.Item
                         rules={[
                             { required: true, message: 'please enter a title' },
-                            // { min: 5, message: "must be the 5 cahracter" },
-                            // { max: 15, message: "more than 15 character" }
+                            { min: 5, message: "must be the 5 cahracter" },
+                            { max: 10, message: "more than 10 character" }
                         ]}
                         name="title"
                     >
@@ -47,8 +47,8 @@ const CreateBlog = () => {
                     <Form.Item
                         rules={[
                             { required: true, message: "please enter a description!" },
-                            // { min: 10, message: "must be the 10 character!" },
-                            // { max: , message: "more than 100 character" }
+                            { min: 5, message: "must be the 5 character!" },
+                            { max: 15, message: "more than 15character" }
                         ]}
                         name="description"
                     >

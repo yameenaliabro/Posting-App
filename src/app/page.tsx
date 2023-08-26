@@ -5,9 +5,7 @@ export default function Home() {
   return (
     <div>
       <AuthGuard>
-        <PostProvider>
-          <MainHome />
-        </PostProvider>
+        <MainHome />
       </AuthGuard>
     </div>
   )
