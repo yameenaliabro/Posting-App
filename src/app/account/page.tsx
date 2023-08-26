@@ -2,8 +2,12 @@ import React from 'react';
 import ProfileCard from '../section/account';
 
 const ProfilePage = () => {
+
+
     return (
-        <ProfileCard />
+        <div className="p-10">
+            <ProfileCard />
+        </div>
     );
 };
 

@@ -1,5 +1,5 @@
 "use client";
-import { AuthContext, signin, signup } from '@src/app/types/auth'
+import { AuthContext, signin, signup, updateProfie } from '@src/app/types/auth'
 import React, { useCallback, useState, useEffect, useMemo, createContext, ReactNode } from 'react'
 import {
     signInWithEmailAndPassword,
@@ -30,6 +30,24 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
             console.log("🚀 ~ file: index.tsx:22 ~ signup ~ error:", error)
         }
     }, [])
+
+    const updateProfileInfo = useCallback(async (value: updateProfie) => {
+        const { displayName, photoUrl: photoURL } = value
+        setloading(true)
+        try {
+            if (user) {
+                await updateProfile(user, {
+                    displayName,
+                    photoURL,
+                });
+                setuser({ ...user, displayName, photoURL });
+                setloading(false)
+            }
+        } catch (error) {
+            console.log('Error updating profile:', error);
+            setloading(false)
+        }
+    }, [user]);
 
     const signin = useCallback(async ({ email, password }: signin) => {
         try {
@@ -74,13 +92,15 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         signup,
         signin,
         isAuthenticated,
-        user
+        user,
+        updateProfileInfo
     }), [
         signout,
         signup,
         signin,
         isAuthenticated,
-        user
+        user,
+        updateProfileInfo
     ])
 
     return (

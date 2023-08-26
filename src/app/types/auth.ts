@@ -14,7 +14,10 @@ export type signin = {
     password: string,
 
 }
-
+export type updateProfie = {
+    photoUrl: string,
+    displayName: string
+}
 
 export type AuthContext = {
     signin: (props: signin) => void,
@@ -22,5 +25,6 @@ export type AuthContext = {
     signout: VoidFunction,
     isAuthenticated: boolean,
     user: User | null,
+    updateProfileInfo: (props: updateProfie) => void
 
 }
