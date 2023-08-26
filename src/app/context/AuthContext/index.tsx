@@ -10,11 +10,12 @@ import {
     User
 } from "firebase/auth"
 import { auth } from '@src/app/service/firebase'
+import Loading from '@src/app/Loading/page';
 
 const AuthContext = createContext<AuthContext | null>(null)
 
 const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-    const [loading, setloading] = useState<boolean>(false)
+    const [loading, setloading] = useState<boolean>(true)
     const [isAuthenticated, setisAuthenticated] = useState(false)
     const [user, setuser] = useState<User | null>(null)
     const [token, settoken] = useState<string | null>(null)
@@ -46,8 +47,9 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [])
 
-    const checkAuth = useCallback(() => {
+    const checkAuth = useCallback(async () => {
         onAuthStateChanged(auth, async (_user) => {
+            console.log()
             setloading(true)
             setuser(_user)
             setisAuthenticated(!!_user)
@@ -65,9 +67,8 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }, [user])
     useEffect(() => {
         checkAuth()
-        return () => { }
-    }, [checkAuth])
-
+        console.log(loading)
+    }, [checkAuth, loading])
     const value = useMemo(() => ({
         signout,
         signup,
@@ -83,11 +84,9 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     ])
 
     return (
-        <div>
-            <AuthContext.Provider value={value}>
-                {loading ? <h1>loading</h1> : children}
-            </AuthContext.Provider>
-        </div>
+        <AuthContext.Provider value={value}>
+            {loading ? <Loading /> : children}
+        </AuthContext.Provider>
     )
 }
 

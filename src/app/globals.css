@@ -8,7 +8,6 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  font-family: ui-rounded !important;
 }
 
 * {
@@ -20,6 +19,11 @@ body {
 #__next {
   height: 100%;
   width: 100%;
+}
+
+* {
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .ant-btn-primary {

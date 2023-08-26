@@ -8,20 +8,18 @@ import Link from 'next/link'
 import React, { useCallback } from 'react'
 
 const Signup = () => {
-    const { signup, user, isAuthenticated } = UseAuth()
+    const { signup } = UseAuth()
     const [form] = useForm()
     const onFinish = useCallback(async (value: signup) => {
         try {
             await signup(value)
             message.success("login sucessfull")
             form.resetFields()
-            console.log("🚀 ~ file: index.tsx:19 ~ onFinish ~  user:", user)
-            console.log("🚀 ~ file: index.tsx:20 ~ onFinish ~  isAuthenticated:", isAuthenticated)
 
         } catch (error) {
             console.log("🚀 ~ file: index.tsx:14 ~ onFinish ~ error):", error)
         }
-    }, [isAuthenticated, form, signup, user])
+    }, [, form, signup])
 
     return (
         <div className='flex justify-center items-center h-[100vh]'>

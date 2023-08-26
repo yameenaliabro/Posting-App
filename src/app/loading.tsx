@@ -1,10 +1,10 @@
 import React from 'react'
 import { Spin } from "antd"
-const Loading = () => {
+const loading = () => {
     return (
-        <div className='flex justify-center items-center h-[100vh]'>
+        <div className='flex justify-center items-center  h-full'>
             <Spin className='text-green-400' />
         </div>
     )
 }
-export default Loading
+export default loading

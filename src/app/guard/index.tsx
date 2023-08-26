@@ -16,7 +16,11 @@ const AuthGuard = ({ children }: { children: ReactNode }) => {
         )
     }
 
-    return children
+    return (
+        <div>
+            {children}
+        </div>
+    )
 }
 
 export default AuthGuard

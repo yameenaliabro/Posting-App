@@ -1,12 +1,13 @@
-import { AuthContextProvider } from "./context";
+import MainHome from "./Home";
+import { PostContext, PostProvider } from "./context";
 import AuthGuard from "./guard";
-import CreateBlog from "./section/homesection/createblog";
-
 export default function Home() {
   return (
     <div>
       <AuthGuard>
-        <CreateBlog />
+        <PostProvider>
+          <MainHome />
+        </PostProvider>
       </AuthGuard>
     </div>
   )

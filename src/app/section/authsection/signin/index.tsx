@@ -6,7 +6,7 @@ import { signin } from '@src/app/types/auth';
 import { useForm } from 'antd/es/form/Form';
 import UseAuth from '@src/app/hooks/auth/UseAuth';
 const Singin = () => {
-    const { signin, user, isAuthenticated } = UseAuth()
+    const { signin, } = UseAuth()
     const [form] = useForm()
 
     const onFinish = useCallback(async (value: signin) => {
@@ -15,12 +15,11 @@ const Singin = () => {
             await signin(value)
             message.success("login sucessfull")
             form.resetFields()
-            console.log("🚀 ~ file: index.tsx:20 ~ onFinish ~  isAuthenticated:", isAuthenticated)
 
         } catch (error) {
             console.log("🚀 ~ file: index.tsx:14 ~ onFinish ~ error):", error)
         }
-    }, [signin, form, isAuthenticated])
+    }, [signin, form])
 
     return (
         <div className='flex justify-center items-center h-[100vh]'>
