@@ -1,3 +1,5 @@
+import { FieldValue } from "firebase/firestore"
+
 export type createpostprop = {
     title: string,
     description: string,
@@ -9,9 +11,10 @@ export type createpostprop = {
 export type getpostprop = {
     title: string,
     description: string,
-    userName: string,
-    createAt: Date,
-    id: string
+    userName: string | null,
+    createdAt: FieldValue,
+    id: string | null
+    userId?: string,
 }
 
 export type PostContext = {
@@ -19,6 +22,6 @@ export type PostContext = {
     getPost: () => void,
     Post: getpostprop[],
     loading: boolean
-    // deletepost: (userid: string) => void
+    deletePost: (userid: string) => void
     // editpost: (props: getpostprop) => void
 }

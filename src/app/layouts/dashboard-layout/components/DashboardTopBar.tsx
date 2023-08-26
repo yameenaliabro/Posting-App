@@ -25,7 +25,7 @@ function DashboardTopBar() {
     ]), [signout, user])
 
     return (
-        <Header className='flex justify-between items-center w-full'>
+        <Header className='flex justify-between items-center w-full h-full'>
             <Typography.Title className='text-white' level={3}>Todo App</Typography.Title>
             <Dropdown arrow placement='bottom' menu={{ className: "w-40", items: avatarOption }}>
                 <Avatar src="https://www.pngarts.com/files/6/User-Avatar-in-Suit-PNG.png" />

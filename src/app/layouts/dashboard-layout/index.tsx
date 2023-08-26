@@ -16,7 +16,7 @@ function DashboardLayout(props: DashboardLayoutProps) {
     return (
         <Layout>
             <DashboardTopBar />
-            <Layout className='h-[700px]'>
+            <Layout className='h-[1000px]'>
                 <DashboardSideBar />
                 <Content className='h-full'>
                     {children}

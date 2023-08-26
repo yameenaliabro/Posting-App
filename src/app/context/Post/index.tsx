@@ -3,34 +3,36 @@ import { Loader } from '@src/app/compoenets/Common';
 import { UseAuth } from '@src/app/hooks'
 import { auth, db } from '@src/app/service/firebase'
 import { PostContext, createpostprop, getpostprop, } from '@src/app/types'
-import { addDoc, collection, getDocs, query, serverTimestamp, where } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDocs, query, serverTimestamp, where } from 'firebase/firestore'
 import React, { ReactNode, createContext, useCallback, useEffect, useMemo, useState } from 'react'
 
 
 const PostContext = createContext<PostContext | null>(null)
 
 const PostProvider = ({ children }: { children: ReactNode }) => {
-    const [loading, setloading] = useState(false)
-    const [Post, setPost] = useState<getpostprop[]>([])
+    const [loading, setLoading] = useState(false)
+    const [Post, setPosts] = useState<getpostprop[]>([])
     const { user } = UseAuth()
 
     const createPost = useCallback(async (prop: createpostprop) => {
-        setloading(true)
+        setLoading(true);
         try {
-            const doc = await addDoc(collection(db, "blogs"), {
+            const newPost = {
                 title: prop.title,
                 description: prop.description,
                 createdAt: serverTimestamp(),
                 userId: user?.uid,
-                userName: user?.displayName
-            })
-            setloading(false)
+                userName: user?.displayName || null
+            };
+
+            const docRef = await addDoc(collection(db, "blogs"), newPost);
+            setPosts(prevPosts => [{ ...newPost, id: docRef.id }, ...prevPosts]);
         } catch (error) {
-            console.log("🚀 ~ file: index.tsx:10 ~ onFinish ~ error:", error)
+            console.log("Error creating post:", error);
         } finally {
-            setloading(false)
+            setLoading(false);
         }
-    }, [user])
+    }, [user]);
 
 
     const getPost = useCallback(async () => {
@@ -43,13 +45,21 @@ const PostProvider = ({ children }: { children: ReactNode }) => {
                 querySnapshot.forEach((doc) => {
                     posts.push({ ...doc.data(), id: doc.id } as getpostprop)
                 })
-                setPost(posts)
+                setPosts(posts)
             }
         } catch (error) {
 
         }
     }, [user])
 
+    const deletePost = useCallback(async (postId: string) => {
+        try {
+            await deleteDoc(doc(db, "blogs", postId))
+            setPosts(Post.filter(post => post.id !== postId))
+        } catch (error) {
+            console.log("🚀 ~ file: index.tsx:58 ~ deletePost ~ error:", error)
+        }
+    }, [Post])
     useEffect(() => {
         getPost()
         return () => { }
@@ -61,15 +71,17 @@ const PostProvider = ({ children }: { children: ReactNode }) => {
         getPost,
         Post,
         loading,
+        deletePost
     }), [
         createPost,
         getPost,
         Post,
-        loading
+        loading,
+        deletePost
     ])
     return (
         <PostContext.Provider value={value}>
-            {loading ? <Loader /> : children}
+            {children}
         </PostContext.Provider>
     )
 }

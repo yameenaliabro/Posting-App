@@ -10,8 +10,8 @@ const AuthGuard = ({ children }: { children: ReactNode }) => {
     if (isAuthenticated === false) {
         return (
             <div>
-                <SigninPage />
                 <SignupPage />
+                <SigninPage />
             </div>
         )
     }
