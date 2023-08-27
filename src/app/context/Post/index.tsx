@@ -35,17 +35,21 @@ const PostProvider = ({ children }: { children: ReactNode }) => {
 
     const getAllPost = useCallback(async () => {
         try {
-            const querySnapshot = await getDocs(collection(db, "blogs"))
-            const posts: getpostprop[] = []
-            querySnapshot.forEach((doc) => {
-                posts.push({ ...doc.data(), id: doc.id } as getpostprop)
-            })
-            setPosts(posts)
-        } catch (error) {
-            console.log("🚀 ~ file: index.tsx:41 ~ getAllPost ~ error:", error)
+            const querySnapshot = await getDocs(collection(db, 'posts')); // Replace 'posts' with your collection name
 
+            const postData: getpostprop[] = querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                title: doc.data().title, // Replace with the actual field names in Firestore
+                description: doc.data().description,
+                userName: doc.data().userName,
+                createdAt: doc.data().createdAt,
+                userId: doc.data().userId,
+            }));
+            setPosts(postData);
+        } catch (error) {
+            console.error("Error fetching data:", error);
         }
-    }, [])
+    }, []);
 
     const getPost = useCallback(async () => {
         try {

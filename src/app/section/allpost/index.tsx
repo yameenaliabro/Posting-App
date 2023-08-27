@@ -10,6 +10,7 @@ const AllPost = () => {
     const [editmodalvisible, seteditmodalvisible] = useState(false)
     const [editPost, seteditPost] = useState<getpostprop | null>(null)
     const { deletePost, updatePost, Post } = UsePost()
+    console.log("🚀 ~ file: index.tsx:13 ~ AllPost ~ Post:", Post)
     const { user } = UseAuth()
     useEffect(() => {
         return () => { }
