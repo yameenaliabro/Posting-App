@@ -13,7 +13,7 @@ function DashboardSideBar() {
             key: "dashboard"
         },
         {
-            label: <Link href="/all-posts">All Posts</Link>, icon: <UpOutlined />,
+            label: <Link href="/allposts">All Posts</Link>, icon: <UpOutlined />,
             key: "allposts"
         },
         {

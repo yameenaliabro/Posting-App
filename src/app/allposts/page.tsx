@@ -1,9 +1,10 @@
 import React from 'react'
-import AllPost from '../section/all-post'
 
 const AllPosts = () => {
     return (
-        <AllPost />
+        <div>
+            <h1>kdnkn</h1>
+        </div>
     )
 }
 export default AllPosts
