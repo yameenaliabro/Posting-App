@@ -1,14 +1,13 @@
 "use client";
 import React, { ReactNode } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import UseAuth from '../hooks/auth/UseAuth';
 import SignupPage from '../auth/signup/page';
 import SigninPage from '../auth/signin/page';
 
 const AuthGuard = ({ children }: { children: ReactNode }) => {
     const { isAuthenticated } = UseAuth();
-    const router = useRouter()
-    const currentPathname = usePathname()
+    const currentPathname = usePathname();
 
     if (currentPathname === '/auth/signin' && isAuthenticated === false) {
         return (
@@ -26,10 +25,8 @@ const AuthGuard = ({ children }: { children: ReactNode }) => {
         );
     }
 
-
-    if (isAuthenticated === true) {
-        router.replace("/")
-
+    // If user is authenticated and not on /auth/signin, render children
+    if (isAuthenticated === true && currentPathname !== '/auth/signin') {
         return (
             <div>
                 {children}
@@ -37,7 +34,8 @@ const AuthGuard = ({ children }: { children: ReactNode }) => {
         );
     }
 
-
+    // Default case (not authenticated, not on /auth/signin)
+    return null
 };
 
 export default AuthGuard;

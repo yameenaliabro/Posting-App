@@ -13,6 +13,7 @@ import {
 } from "firebase/auth"
 import { auth } from '@src/app/service/firebase'
 import Loading from '@src/app/Loading/page';
+import { useRouter } from 'next/navigation';
 
 const AuthContext = createContext<AuthContext | null>(null)
 
@@ -21,6 +22,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const [isAuthenticated, setisAuthenticated] = useState(false)
     const [user, setuser] = useState<User | null>(null)
     const [token, settoken] = useState<string | null>(null)
+    const { push } = useRouter()
     const signup = useCallback(async ({ email, firstname, password, image }: signup) => {
         setloading(true)
         try {
@@ -47,24 +49,26 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
                 });
                 setuser({ ...user, displayName, photoURL });
                 setloading(false)
+                push("/")
             }
         } catch (error) {
             console.log('Error updating profile:', error);
             setloading(false)
         }
-    }, [user]);
+    }, [user, push]);
 
     const signin = useCallback(async ({ email, password }: signin) => {
         setloading(true)
         try {
             await signInWithEmailAndPassword(auth, email, password)
             setloading(false)
+            push("/")
         } catch (error) {
             console.log("🚀 ~ file: index.tsx:30 ~ singin ~ error:", error)
             setloading(false)
 
         }
-    }, [])
+    }, [push])
 
     const signout = useCallback(async () => {
         try {
@@ -91,7 +95,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
             }
             setloading(false)
         })
-    }, [user])
+    }, [user,])
 
 
     const signupWithGoogle = useCallback(async () => {
@@ -104,11 +108,12 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
                     displayName: user.displayName as string,
                     photoUrl: user.photoURL as string,
                 });
+                push("/")
             }
         } catch (error) {
             console.error('Google signup error:', error);
         }
-    }, [updateProfileInfo]);
+    }, [updateProfileInfo, push]);
 
     useEffect(() => {
         checkAuth()

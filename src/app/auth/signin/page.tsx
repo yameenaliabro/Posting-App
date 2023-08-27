@@ -5,7 +5,6 @@ const SigninPage = () => {
     return (
         <div>
             <Singin />
-            kskcnikjidjnc
         </div>
     )
 }
