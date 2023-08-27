@@ -27,7 +27,7 @@ function DashboardTopBar() {
     ]), [signout, user])
 
     return (
-        <Header className='sticky top-0 left-0'>
+        <Header>
             <Row
                 justify={'center'}
                 align={"middle"}

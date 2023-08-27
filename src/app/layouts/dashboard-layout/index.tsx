@@ -16,7 +16,7 @@ function DashboardLayout(props: DashboardLayoutProps) {
     return (
         <Layout className='min-h-[100vh]'>
             <DashboardSideBar />
-            <Layout className='z-100'>
+            <Layout>
                 <DashboardTopBar />
                 <Content>
                     {children}

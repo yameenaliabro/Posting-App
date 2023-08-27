@@ -47,7 +47,7 @@ const ShowPost = () => {
     }, [])
 
     return (
-        <div>
+        <div className="mb-10">
             <Typography.Title className="text-center mb-10">My Post</Typography.Title>
             <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 ml-10 mr-10">
                 {Post.map(post => (

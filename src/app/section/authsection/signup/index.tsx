@@ -28,7 +28,7 @@ const Signup = () => {
                 className='flex flex-col bg-gray-100 p-5'
             >
                 <Form
-                    className='w-[350px] h-[370px] '
+                    className='w-[350px] h-[400px]'
                     onFinish={onFinish}
                     form={form}
                 >
