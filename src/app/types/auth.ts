@@ -25,6 +25,8 @@ export type AuthContext = {
     signout: VoidFunction,
     isAuthenticated: boolean,
     user: User | null,
-    updateProfileInfo: (props: updateProfie) => void
+    updateProfileInfo: (props: updateProfie) => void,
+    signupWithGoogle: () => void,
+    loading: boolean
 
 }

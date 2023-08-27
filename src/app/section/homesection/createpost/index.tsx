@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from 'react'
 import { Card, Form, Input, Button, Typography, message } from "antd"
 import { useForm } from 'antd/es/form/Form';
-import { UseAuth, UsePost } from '@src/app/hooks';
+import { UsePost } from '@src/app/hooks';
 import { createpostprop } from '@src/app/types';
 
 
@@ -37,8 +37,8 @@ const CreateBlog = () => {
                     <Form.Item
                         rules={[
                             { required: true, message: 'please enter a title' },
-                            { min: 5, message: "must be the 5 cahracter" },
-                            { max: 10, message: "more than 10 character" }
+                            // { min: 5, message: "must be the 5 cahracter" },
+                            // { max: 10, message: "more than 10 character" }
                         ]}
                         name="title"
                     >
@@ -47,8 +47,8 @@ const CreateBlog = () => {
                     <Form.Item
                         rules={[
                             { required: true, message: "please enter a description!" },
-                            { min: 5, message: "must be the 5 character!" },
-                            { max: 15, message: "more than 15character" }
+                            // { min: 5, message: "must be the 5 character!" },
+                            // { max: 15, message: "more than 15character" }
                         ]}
                         name="description"
                     >

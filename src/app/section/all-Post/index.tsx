@@ -4,13 +4,13 @@ import { Avatar, Button, Card, Divider, List, Popconfirm, Typography, message } 
 import { useCallback, useEffect, useState } from "react"
 import { Timestamp } from "firebase/firestore";
 import { UpdateModal } from "../homesection";
-import { UsePost } from "@src/app/hooks";
+import { UseAuth, UsePost } from "@src/app/hooks";
 
 const AllPost = () => {
     const [editmodalvisible, seteditmodalvisible] = useState(false)
     const [editPost, seteditPost] = useState<getpostprop | null>(null)
     const { deletePost, updatePost, Post } = UsePost()
-
+    const { user } = UseAuth()
     useEffect(() => {
         return () => { }
     }, [Post])
@@ -46,23 +46,22 @@ const AllPost = () => {
 
     return (
         <div>
-            <Typography.Title className="text-center mb-10">All Blogs</Typography.Title>
+            <Typography.Title className="text-center mb-10">All  Post</Typography.Title>
             <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 ml-10 mr-10">
                 {Post.map(post => (
                     <Card
                         className="rounded-md max-h-[600px] min-h-[200px] overflow-y-auto"
                         key={post.id}
                         hoverable
-                        extra={<a href="#">View Details</a>}>
+                    >
                         <Card.Meta
                             avatar={<Avatar src="https://www.pngarts.com/files/6/User-Avatar-in-Suit-PNG.png" />}
-                            title={post.userName}
+                            title={user?.displayName}
                             description={post.title}
                         />
                         <Divider />
                         <span className="text-center">{post.description}</span><br />
                         <span>CreatedAt: {post.createdAt instanceof Timestamp ? post.createdAt.toDate().toLocaleString() : 'Invalid Date'}</span>
-
                         <Divider />
                         <Popconfirm
                             title="are you sure you want to delete the post!"

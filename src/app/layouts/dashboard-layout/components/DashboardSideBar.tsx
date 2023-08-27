@@ -1,5 +1,5 @@
 import { HomeOutlined, MailOutlined, NodeCollapseOutlined, UpOutlined, UserOutlined } from '@ant-design/icons'
-import { Layout, Menu, MenuProps, } from 'antd'
+import { Image, Layout, Menu, MenuProps, Typography, } from 'antd'
 import Link from 'next/link'
 import React, { useMemo } from 'react'
 
@@ -23,8 +23,8 @@ function DashboardSideBar() {
     ]), [])
 
     return (
-        <Sider className='h-full'>
-            <Menu items={menuItems} theme="dark" />
+        <Sider className='sticky top-0 left-0'>
+            <Menu items={menuItems} theme="dark" className='sticky top-20 left-0 mt-20' />
         </Sider>
     )
 }

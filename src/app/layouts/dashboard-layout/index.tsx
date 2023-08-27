@@ -14,11 +14,11 @@ function DashboardLayout(props: DashboardLayoutProps) {
     const { children } = props
 
     return (
-        <Layout>
-            <DashboardTopBar />
-            <Layout className='h-[1000px]'>
-                <DashboardSideBar />
-                <Content className='h-full'>
+        <Layout className='min-h-[100vh]'>
+            <DashboardSideBar />
+            <Layout className='z-100'>
+                <DashboardTopBar />
+                <Content>
                     {children}
                 </Content>
             </Layout>

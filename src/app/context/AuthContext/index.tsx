@@ -7,7 +7,9 @@ import {
     onAuthStateChanged,
     updateProfile,
     signOut,
-    User
+    User,
+    GoogleAuthProvider,
+    signInWithPopup
 } from "firebase/auth"
 import { auth } from '@src/app/service/firebase'
 import Loading from '@src/app/Loading/page';
@@ -20,14 +22,17 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const [user, setuser] = useState<User | null>(null)
     const [token, settoken] = useState<string | null>(null)
     const signup = useCallback(async ({ email, firstname, password, image }: signup) => {
+        setloading(true)
         try {
             const { user } = await createUserWithEmailAndPassword(auth, email, password)
             updateProfile(user, {
                 displayName: firstname,
                 photoURL: image
             })
+            setloading(false)
         } catch (error) {
             console.log("🚀 ~ file: index.tsx:22 ~ signup ~ error:", error)
+            setloading(false)
         }
     }, [])
 
@@ -50,10 +55,14 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }, [user]);
 
     const signin = useCallback(async ({ email, password }: signin) => {
+        setloading(true)
         try {
             await signInWithEmailAndPassword(auth, email, password)
+            setloading(false)
         } catch (error) {
             console.log("🚀 ~ file: index.tsx:30 ~ singin ~ error:", error)
+            setloading(false)
+
         }
     }, [])
 
@@ -83,6 +92,24 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
             setloading(false)
         })
     }, [user])
+
+
+    const signupWithGoogle = useCallback(async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            if (user) {
+                updateProfileInfo({
+                    displayName: user.displayName as string,
+                    photoUrl: user.photoURL as string,
+                });
+            }
+        } catch (error) {
+            console.error('Google signup error:', error);
+        }
+    }, [updateProfileInfo]);
+
     useEffect(() => {
         checkAuth()
         console.log(loading)
@@ -93,14 +120,18 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         signin,
         isAuthenticated,
         user,
-        updateProfileInfo
+        updateProfileInfo,
+        signupWithGoogle,
+        loading
     }), [
         signout,
         signup,
         signin,
         isAuthenticated,
         user,
-        updateProfileInfo
+        updateProfileInfo,
+        signupWithGoogle,
+        loading
     ])
 
     return (

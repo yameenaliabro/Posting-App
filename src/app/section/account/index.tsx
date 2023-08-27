@@ -7,7 +7,7 @@ const ProfileCard = () => {
     const { user, signout: signOut, updateProfileInfo } = UseAuth()
     const [form] = Form.useForm();
     const [editing, setEditing] = useState(false);
-
+    const { signout } = UseAuth()
     const handleEdit = () => {
         setEditing(true);
         form.setFieldsValue({
@@ -67,6 +67,7 @@ const ProfileCard = () => {
             <Button
                 type="primary"
                 className="w-full mt-4"
+                onClick={signout}
             >
                 Sign Out
             </Button>
